@@ -29,12 +29,22 @@ export class UsersService {
     };
   }
 
-  findAll() {
-    return this.repo.find();
+  async findAll() {
+    const user = await this.repo.find();
+    return user.map((u) => {
+      return{
+        ...u,
+        password: undefined
+      }
+    });
   }
 
-  findOne(id: number) {
-    return this.repo.findOneBy({ id });
+  async findOne(id: number) {
+    const user = await this.repo.findOneBy({ id });
+    return {
+      ...user,
+      password: undefined
+    }
   }
 
   findByEmail(email: string) {
